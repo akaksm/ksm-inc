@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import { mongo_uri } from './index.js';
 
-const dbUrl = process.env.DB_URL;
+const connectDb = () => mongoose.connect(mongo_uri,
+    console.log(`MongoDB connected.`)
+)
 
-const configDb = mongoose.connect(dbUrl)
-
-export default configDb
+export default connectDb;
