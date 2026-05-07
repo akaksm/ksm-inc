@@ -2,8 +2,6 @@ import app from "./app.js";
 import connectDb from "./config/db.js";
 import { port } from "./config/index.js";
 
-
-
 (async () => {
     await connectDb()
 

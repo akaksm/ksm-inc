@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import AppError from '../utils/AppError.js';
 
 const requiredEnvVariables = [
     'PORT',
@@ -8,7 +9,7 @@ const requiredEnvVariables = [
 
 for (const key of requiredEnvVariables) {
     if (!process.env[key]) {
-        throw new Error(`Missing required environment variable: ${key}`);
+        throw new AppError(`Missing required environment variable: ${key}`);
     }
 }
 

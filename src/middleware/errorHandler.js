@@ -1,8 +1,7 @@
-import e from "express"
 import AppError from "../utils/AppError.js"
 import { node_env } from "../config/index.js"
 
-// Triggerd when: invalid MongoDb ObjectID form
+// Triggered when: invalid MongoDb ObjectID form
 const handleCastError = (err) => {
     return new AppError(`Invalid ${err.path}: '${err.value}' is not a valid ID`, 400)
 }
