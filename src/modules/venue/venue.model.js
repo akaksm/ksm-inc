@@ -5,32 +5,19 @@ const venueSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Name is required'],
         trim: true,
-        maxlength: [50, `Cannot exceed word length more than 50`],
-        validate: {
-            validator: v => typeof v === 'string',
-            message: 'Name must be a string'
-        }
+        maxlength: [50, `Cannot exceed word length more than 50`]
     },
     location: {
         type: String,
         required: [true, 'Location is required'],
         trim: true,
-        maxlength: [50, `Cannot exceed word length more than 50`],
-        validate: {
-            validator: v => typeof v === 'string',
-            message: 'Location must be a string'
-        }
+        maxlength: [50, `Cannot exceed word length more than 50`]
     },
     city: {
         type: String,
         required: [true, 'City is required'],
         trim: true,
-        maxlength: [50, `Cannot exceed word length more than 50`],
-        validate: {
-            validator: v => typeof v === 'string',
-            message: 'City must be a string'
-        }
-
+        maxlength: [50, `Cannot exceed word length more than 50`]
     }
 }, { timestamps: true })
 

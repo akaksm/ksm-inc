@@ -11,10 +11,6 @@ const screenSchema = new mongoose.Schema({
         required: [true, 'Name is required'],
         trim: true,
         maxlength: [30, 'Cannot exceed word length more than 30'],
-        validate: {
-            validator: v => typeof v === 'string',
-            message: 'Name must be a string'
-        }
     },
     screen_type: {
         type: String,

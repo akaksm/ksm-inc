@@ -47,7 +47,7 @@ export const findVenuesByCity = async (city) => {
  * @returns {Promise<Object|null>} The updated Mongoose document or null if not found
  */
 export const updateVenue = async (id, data) => {
-    return Venue.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: true })
+    return Venue.findByIdAndUpdate(id, data, { new: true, runValidators: true })
 }
 
 /**

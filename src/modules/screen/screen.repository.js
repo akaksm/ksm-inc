@@ -44,7 +44,7 @@ export const findScreenByVenueId = async (venueId) => {
  */
 export const updateScreen = async (id, data) => {
     return Screen.findByIdAndUpdate(id, data, {
-        returnDocument: 'after',
+        new: true,
         runValidators: true
     })
 }

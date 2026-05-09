@@ -28,7 +28,7 @@ class ScreenService {
         const { venue_id } = filters
 
         if (venue_id) {
-            const screenExists = await Screen.exists({ venue_id })
+            const screenExists = await findScreenByVenueId(venue_id)
 
             if (!screenExists) throw new AppError(`No screen found with this venue`, 404)
 
