@@ -32,7 +32,12 @@ export const findAllVenues = async () => {
  * @returns {Promise<Array>} Array of Mongoose documents
  */
 export const findVenuesByCity = async (city) => {
-    return Venue.find({ city })
+    return Venue.find({
+        city: {
+            $regex: city,
+            $options: 'i'
+        }
+    })
 }
 
 /**
@@ -42,9 +47,7 @@ export const findVenuesByCity = async (city) => {
  * @returns {Promise<Object|null>} The updated Mongoose document or null if not found
  */
 export const updateVenue = async (id, data) => {
-    // { new: true } ensures Mongoose returns the updated document, not the old one.
-    // { runValidators: true } ensures the new data adheres to your schema rules (e.g., maxlength).
-    return Venue.findByIdAndUpdate(id, data, { new: true, runValidators: true })
+    return Venue.findByIdAndUpdate(id, data, { returnDocument: 'after', runValidators: true })
 }
 
 /**
