@@ -2,7 +2,7 @@ import Screen from "./screen.model.js"
 
 
 /**
- * Creates a new venue document.
+ * Creates a new screen document.
  * @param {Object} data - The screen data
  * @returns {Promise<Object>} The created Mongoose document
  */

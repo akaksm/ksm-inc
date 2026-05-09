@@ -32,7 +32,7 @@ class ScreenService {
 
             if (!screenExists) throw new AppError(`No screen found with this venue`, 404)
 
-            return await findScreenByVenueId(venue_id)
+            return screenExists
         }
 
         return findAllScreens()

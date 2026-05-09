@@ -31,8 +31,8 @@ export const updateScreen = async (req, res) => {
 }
 
 // DELETE /screens/:id
-export const deletedScreen = async (req, res) => {
-    const deletedScreen = await ScreenService.deletedScreen(req.params.id)
+export const deleteScreen = async (req, res) => {
+    const deletedScreen = await ScreenService.deleteScreen(req.params.id)
 
     return res.status(200).json(new AppResponse('screen deleted successfully', deletedScreen))
 }
