@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import bcrypt from 'bcryptjs'
-import { jwt_expires_in, jwt_secret } from '../../config.js'
+import { jwt_expires_in, jwt_secret } from '../../config/index.js'
 
 class TokenService {
     async generateAuthTokens(userId) {
@@ -27,14 +27,14 @@ class TokenService {
     // We store the *hash* of OTPs/reset-tokens in the DB so a leak doesn't
     // expose the raw value. SHA256 is appropriate for this use case.
 
-    async generateOTPTokens(size = 6) {
-        const bytes = crypto.randomBytes(Math.ceil(length / 2)).toString('hex')
-        return bytes.slice(0, length)
+    generateOTPTokens(size = 6) {
+        const bytes = crypto.randomBytes(Math.ceil(size / 2)).toString('hex')
+        return bytes.slice(0, size)
     }
     /**
      * Hash an OTP or token for safe storage (SHA256, hex output)
      */
-    async hashToken(value) {
+    hashToken(value) {
         return crypto.createHash('sha256').update(String(value)).digest('hex')
     }
 

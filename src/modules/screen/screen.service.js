@@ -30,7 +30,7 @@ class ScreenService {
             return screenExists
         }
 
-        return findAllScreens()
+        return screenRepository.findAllScreens()
     }
 
     async updateScreen(id, data) {

@@ -24,7 +24,7 @@ class VenueService {
             return await venueRepository.findVenuesByCity(city.trim())
         }
 
-        return findAllVenues()
+        return venueRepository.findAllVenues()
     }
 
     async updateVenue(id, data) {

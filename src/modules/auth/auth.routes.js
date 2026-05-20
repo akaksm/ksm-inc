@@ -6,13 +6,11 @@ import { forgotPassword, login, register, resendVerificationOTP, resetPassword, 
 
 const authRouter = Router()
 
-authRouter
-    .route('/')
-    .post(validate(authValidation.register), register)
-    .post(validate(authValidation.verifyEmail), verifyEmail)
-    .post(validate(authValidation.resendVerificationOTP), resendVerificationOTP)
-    .post(validate(authValidation.login), login)
-    .post(validate(authValidation.forgotPassword), forgotPassword)
-    .post(validate(authValidation.resetPassword), resetPassword)
+authRouter.post('/register', validate(authValidation.register), register)
+authRouter.post('/verify-email', validate(authValidation.verifyEmail), verifyEmail)
+authRouter.post('/resend-otp', validate(authValidation.resendVerificationOTP), resendVerificationOTP)
+authRouter.post('/login', validate(authValidation.login), login)
+authRouter.post('/forgot-password', validate(authValidation.forgotPassword), forgotPassword)
+authRouter.post('/reset-password', validate(authValidation.resetPassword), resetPassword)
 
 export default authRouter

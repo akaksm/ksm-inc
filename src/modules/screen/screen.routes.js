@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createScreen, deletedScreen, getAllScreens, getScreenById, updateScreen } from "./screen.controller.js";
+import { createScreen, deleteScreen, getAllScreens, getScreenById, updateScreen } from "./screen.controller.js";
 
 
 
@@ -14,6 +14,6 @@ screenRouter
     .route('/:id')
     .get(getScreenById)
     .patch(updateScreen)
-    .delete(deletedScreen)
+    .delete(deleteScreen)
 
 export default screenRouter

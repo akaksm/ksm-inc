@@ -31,8 +31,8 @@ class AuthService {
             email: userData.email,
             password: hashedPassword,
             role: ROLE_MAP[userData.role] ?? 'CUSTOMER',
-            emailVerificationOTP: tokenService.hashToken(otp),
-            emailVerificationOTPExpiresAt: new Date(Date.now() + OTP_TTL_MS)
+            emailVerificationToken: tokenService.hashToken(otp),
+            emailVerificationTokenExpiresAt: new Date(Date.now() + OTP_TTL_MS)
         });
 
         Promise.all([
@@ -51,7 +51,7 @@ class AuthService {
     async verifyEmail(email, otp) {
         const user = await userRepository.findOne(
             { email },
-            '+emailVerificationOTP +emailVerificationOTPExpiresAt'
+            '+emailVerificationToken +emailVerificationTokenExpiresAt'
         )
 
         if (!user) throw new AppError('User not found', 404)
@@ -59,15 +59,15 @@ class AuthService {
 
         this.#assertOTPValid(
             otp,
-            user.emailVerificationOTP,
-            user.emailVerificationOTPExpiresAt,
+            user.emailVerificationToken,
+            user.emailVerificationTokenExpiresAt,
             'Verification OTP'
         )
 
         await userRepository.updateById(user._id, {
             isVerified: true,
-            emailVerificationOTP: null,
-            emailVerificationOTPExpiresAt: null,
+            emailVerificationToken: null,
+            emailVerificationTokenExpiresAt: null,
         })
 
         return { message: 'Email verified successfully' }
@@ -86,8 +86,8 @@ class AuthService {
         const otp = tokenService.generateOTPTokens()
 
         await userRepository.updateById(user._id, {
-            emailVerificationOTP: tokenService.hashToken(otp),
-            emailVerificationOTPExpiresAt: new Date(Date.now() + OTP_TTL_MS),
+            emailVerificationToken: tokenService.hashToken(otp),
+            emailVerificationTokenExpiresAt: new Date(Date.now() + OTP_TTL_MS),
         })
 
         await mailService.sendEmailVerificationOTP(user.name, user.email, otp)
@@ -105,7 +105,7 @@ class AuthService {
         // +password because it's select:false in the schema
         const user = await userRepository.findOne({ email }, '+password')
 
-        if (!user.email || (await tokenService.comparePassword(password, user.password))) throw new AppError('Invalid email or password', 401);
+        if (!user.email || !(await tokenService.comparePassword(password, user.password))) throw new AppError('Invalid email or password', 401);
         if (!user.isActive) throw new AppError('Your account has been deactivated', 403);
 
         // Update the last login time
@@ -151,8 +151,8 @@ class AuthService {
             const otp = tokenService.generateOTPTokens()
 
             await userRepository.updateById(user._id, {
-                passwordResetOTP: tokenService.hashToken(otp),
-                passwordResetOTPExpiresAt: new Date(Date.now() + OTP_TTL_MS),
+                passwordResetToken: tokenService.hashToken(otp),
+                passwordResetTokenExpiresAt: new Date(Date.now() + OTP_TTL_MS),
             })
             mailService.sendEmailVerificationOTP(user.name, user.email, otp)
         }
@@ -169,15 +169,15 @@ class AuthService {
     async resetPassword(email, otp, newPassword) {
         const user = await userRepository.findOne(
             { email },
-            '+passwordResetOTP +passwordResetOTPExpiresAt'
+            '+passwordResetToken +passwordResetTokenExpiresAt'
         )
 
         if (!user) throw new AppError('Invalid request', 400)
 
         this.#assertOTPValid(
             otp,
-            user.passwordResetOTP,
-            user.passwordResetOTPExpiresAt,
+            user.passwordResetToken,
+            user.passwordResetTokenExpiresAt,
             'Password reset OTP'
         )
 
@@ -185,8 +185,8 @@ class AuthService {
 
         await userRepository.updateById(user._id, {
             password: hashedPassword,
-            passwordResetOTP: null,
-            passwordResetOTPExpiresAt: null,
+            passwordResetToken: null,
+            passwordResetTokenExpiresAt: null,
             passwordChangedAt: new Date(),
         })
 

@@ -4,6 +4,7 @@ import errorHandler from './middleware/errorHandler.js';
 import venueRouter from './modules/venue/venue.routes.js';
 import screenRouter from './modules/screen/screen.routes.js';
 import authRouter from './modules/auth/auth.routes.js';
+import userRouter from './modules/user/user.routes.js';
 
 const app = express();
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.json())
 
 // Router
+app.use('/api/v1/user', userRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/venues', venueRouter)
 app.use('/api/v1/screens', screenRouter)
